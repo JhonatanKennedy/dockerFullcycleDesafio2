@@ -1,0 +1,41 @@
+services:
+    nodedb:
+        container_name: nodedb
+        image: mysql:5.7
+        volumes:
+            - ./mysql:/var/lib/mysql
+        environment:
+            - MYSQL_DATABASE=nodedb
+            - MYSQL_ROOT_PASSWORD=root
+
+        networks:
+            - bridge-network
+
+    node:
+        container_name: node
+        build:
+            context: ./node
+            dockerfile: Dockerfile
+        depends_on:
+            - nodedb
+
+        networks:
+            - bridge-network
+
+    nginx:
+        container_name: nginx
+
+        build:
+            context: ./nginx
+            dockerfile: Dockerfile
+
+        networks:
+            - bridge-network
+        ports:
+            - "8080:80"
+        depends_on:
+            - node
+
+networks:
+    bridge-network:
+        driver: bridge
