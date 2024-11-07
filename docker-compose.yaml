@@ -1,9 +1,11 @@
 services:
     nodedb:
         container_name: nodedb
-        image: mysql:5.7
+        build:
+            context: ./mysql
+            dockerfile: Dockerfile
         volumes:
-            - ./mysql:/var/lib/mysql
+            - ./mysqldb:/var/lib/mysql
         environment:
             - MYSQL_DATABASE=nodedb
             - MYSQL_ROOT_PASSWORD=root
