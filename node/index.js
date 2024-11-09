@@ -4,7 +4,7 @@ const app = express();
 const port = 3000;
 
 const conn = mysql.createConnection({
-    host: "nodedb",
+    host: "database",
     user: "root",
     password: "root",
     database: "nodedb",
